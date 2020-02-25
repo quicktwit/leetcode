@@ -1,7 +1,6 @@
 /*
 * Written by Alok Pratap <https://github.com/quicktwit/>, 2020
 */
-
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -14,19 +13,18 @@
 class Solution {
     vector<int> result;
 public:
-    vector<int> inorderTraversal(TreeNode* root) {
-        recursiveInorderTraversal(root);
+    vector<int> preorderTraversal(TreeNode* root) {
+        recursivePreorderTraversal(root);
         return result;
     }
     
-    void recursiveInorderTraversal(TreeNode* root) {
+    void recursivePreorderTraversal(TreeNode* root) {
         if(root == NULL)
         {
             return;
         }
-        
-        inorderTraversal(root->left);
         result.push_back(root->val);
-        inorderTraversal(root->right);
+        preorderTraversal(root->left);
+        preorderTraversal(root->right);
     }
 };
