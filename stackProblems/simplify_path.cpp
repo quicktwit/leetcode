@@ -2,6 +2,10 @@
 * Written by Alok Pratap <https://github.com/quicktwit/>, 2020
 */
 
+/*
+Result is: Time Limit Exceeded
+*/
+
 class Solution {
 public:
     string simplifyPath(string path) {
