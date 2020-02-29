@@ -2,10 +2,6 @@
 * Written by Alok Pratap <https://github.com/quicktwit/>, 2020
 */
 
-/*
-Result is: Time Limit Exceeded
-*/
-
 class Solution {
 public:
     string simplifyPath(string path) {
@@ -18,12 +14,12 @@ public:
                 {
                     st.push(path[i]);
                 }
-                else if(st.top() >= 'a' && st.top() <= 'z')
+                else if(st.top() != '/' && st.top() != '.')
                 {
                     st.push(path[i]);
                 }
             }
-            else if(path[i] >= 'a' && path[i] <= 'z')
+            else if(path[i] != '/' && path[i] != '.')
             {
                 st.push(path[i]);
             }
@@ -33,16 +29,46 @@ public:
                 {
                     if(path[i + 1] == '.')
                     {
-                        if(!st.empty())
-                        {
-                            st.pop();
-                            // Let's remove the folder
-                            while(!st.empty() && st.top() != '/')
-                            {
-                                st.pop();
+                        if (i < path.size() - 2) {
+                            if (path[i + 2] == '/') {
+                                if(!st.empty())
+                                {
+                                    st.pop();
+                                    // Let's remove the folder
+                                    while(!st.empty() && st.top() != '/')
+                                    {
+                                        st.pop();
+                                    }
+                                }
+                                i++;
+                            }
+                            else {
+                                while (i < path.size() && path[i] != '/') {
+                                    st.push(path[i]);
+                                    i++;
+                                }
+                                i--;
                             }
                         }
-                        i++;
+                        else {
+                            if(!st.empty())
+                            {
+                                st.pop();
+                                // Let's remove the folder
+                                while(!st.empty() && st.top() != '/')
+                                {
+                                    st.pop();
+                                }
+                            }
+                            i++;
+                        }
+                    }
+                    else if (path[i + 1] != '/'){
+                        while (i < path.size() && path[i] != '/') {
+                            st.push(path[i]);
+                            i++;
+                        }
+                        i--;
                     }
                 }
             }
@@ -51,12 +77,16 @@ public:
         while(!st.empty())
         {
             finalString += st.top();
-            st.top();
+            st.pop();
         }
+        std::reverse(finalString.begin(), finalString.end());
         if(finalString[finalString.size() - 1] == '/')
         {
             finalString.erase(finalString.size() - 1, 1);
         }
+        if (finalString == "")
+            finalString = "/";
         return finalString;
+        
     }
 };
